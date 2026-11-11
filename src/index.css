@@ -7,6 +7,8 @@
   --border: #e5e5e5;
   --accent: #863bff;
   --error: #b42318;
+  --font-reading: ui-serif, 'Iowan Old Style', 'Hoefler Text', Palatino,
+    'Palatino Linotype', Georgia, serif;
   font: 16px/1.5 Inter, system-ui, sans-serif;
   color: var(--text-muted);
   background: var(--background);
