@@ -1,7 +1,10 @@
 import { isAxiosError } from 'axios'
 import { Link, useParams } from 'react-router'
+import Avatar from '@/components/avatar'
+import FormattedDate from '@/components/formatted-date'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import CommentList from '@/features/comments/components/CommentList'
 import { usePost } from '@/features/posts/posts.hooks'
 import { gutter } from '@/lib/layout'
 
@@ -57,11 +60,18 @@ const PostDetailsScreen = () => {
       <article className="post-detail">
         <p className="post-number">#{data.id}</p>
         <h1>{data.title}</h1>
-        <div className="author">Author {data.userId}</div>
+        <div className="author">
+          <span className="author-info">
+            <Avatar>{data.userId}</Avatar>
+            Author {data.userId}
+          </span>
+          <FormattedDate value={data.createdAt} />
+        </div>
         <div className="detail-copy">
           {paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
         </div>
       </article>
+      <CommentList postId={data.id} />
     </main>
   )
 }

@@ -447,11 +447,58 @@ h1 {
 }
 
 .post-detail > .author {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
   border-top: 1px solid var(--border);
   color: var(--text-muted);
   display: block;
   margin-top: 1.75rem;
   padding-top: 1rem;
+}
+
+.author-info {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.comment-card {
+  border-top: 1px solid var(--border);
+  padding: 1.25rem 0;
+}
+
+.comment-card .ui-card-header {
+  padding: 0;
+}
+
+.comment-card .ui-card-content {
+  padding: 0.8rem 0 0 2.6rem;
+}
+
+.comment-card .ui-card-content p {
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.comment-card h3 {
+  color: var(--text-heading);
+  font-family: var(--font-reading);
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+.comment-avatar-skeleton {
+  border-radius: 999px;
+  height: 2rem;
+  width: 2rem;
+}
+
+.comment-name-skeleton {
+  height: 1rem;
+  width: 12rem;
 }
 
 .post-detail > .detail-copy {
