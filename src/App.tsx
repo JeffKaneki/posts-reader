@@ -11,16 +11,14 @@ function navigate(path: string) {
 }
 
 function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>('system')
+  const [theme, setTheme] = useState<Theme>(() => {
+    const storedTheme = localStorage.getItem('theme')
+    return storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'system'
+      ? storedTheme
+      : 'system'
+  })
   const [open, setOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme')
-    if (storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'system') {
-      setTheme(storedTheme)
-    }
-  }, [])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
