@@ -1,7 +1,79 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { getComments, getPost, getPosts } from './api'
 import type { Comment, Post } from './types'
 import './App.css'
+
+type Theme = 'light' | 'dark' | 'system'
+
+function ThemeToggle() {
+  const [theme, setTheme] = useState<Theme>('system')
+  const [open, setOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme')
+    if (storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'system') {
+      setTheme(storedTheme)
+    }
+  }, [])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const updateTheme = () => {
+      const isDark = theme === 'dark' || (theme === 'system' && mediaQuery.matches)
+      document.documentElement.classList.toggle('dark', isDark)
+    }
+    updateTheme()
+    mediaQuery.addEventListener('change', updateTheme)
+    return () => mediaQuery.removeEventListener('change', updateTheme)
+  }, [theme])
+
+  useEffect(() => {
+    const closeMenu = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', closeMenu)
+    return () => document.removeEventListener('mousedown', closeMenu)
+  }, [])
+
+  const chooseTheme = (nextTheme: Theme) => {
+    setTheme(nextTheme)
+    localStorage.setItem('theme', nextTheme)
+    setOpen(false)
+  }
+
+  return (
+    <div className="theme-control" ref={menuRef}>
+      <button
+        aria-expanded={open}
+        aria-haspopup="menu"
+        aria-label="Toggle theme"
+        className="theme-button"
+        onClick={() => setOpen((isOpen) => !isOpen)}
+        type="button"
+      >
+        {theme === 'dark' ? '☾' : theme === 'light' ? '☼' : '◐'}
+      </button>
+      {open ? (
+        <div className="theme-menu" role="menu" aria-label="Toggle theme">
+          {(['light', 'dark', 'system'] as Theme[]).map((option) => (
+            <button
+              aria-checked={theme === option}
+              key={option}
+              onClick={() => chooseTheme(option)}
+              role="menuitemradio"
+              type="button"
+            >
+              {option[0].toUpperCase() + option.slice(1)}
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  )
+}
 
 function App() {
   const [path, setPath] = useState(window.location.pathname)
@@ -28,6 +100,7 @@ function App() {
         ) : (
           <span className="brand">Posts</span>
         )}
+        <ThemeToggle />
       </header>
       {postId ? (
         <PostDetail id={Number(postId)} />
