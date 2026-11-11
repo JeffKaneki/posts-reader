@@ -8,6 +8,16 @@
       name="description"
       content="Read posts and their comments in a clean, accessible interface."
     />
+    <script>
+      const savedTheme = localStorage.getItem('theme')
+      if (
+        savedTheme === 'dark' ||
+        (savedTheme !== 'light' &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        document.documentElement.classList.add('dark')
+      }
+    </script>
     <title>Posts</title>
   </head>
   <body>

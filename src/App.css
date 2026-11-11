@@ -137,6 +137,7 @@ h1 {
   color: var(--text-muted);
   line-height: 1.65;
   margin: 0;
+  max-width: 46rem;
 }
 
 .post-number {
@@ -232,4 +233,30 @@ h1 {
   color: var(--text-muted);
   line-height: 1.65;
   margin: 0.8rem 0 0 2.6rem;
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    padding: 1.5rem 0;
+  }
+
+  main {
+    padding-bottom: 2rem;
+  }
+
+  .post-card {
+    border-radius: 1.1rem;
+  }
+
+  .post-card h2 {
+    font-size: 1.1rem;
+  }
+
+  .post-card p {
+    font-size: 0.95rem;
+  }
+
+  .post-detail h1 {
+    font-size: 2.2rem;
+  }
 }
