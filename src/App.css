@@ -32,6 +32,14 @@
   border-color: var(--accent);
 }
 
+.theme-button:focus-visible,
+.theme-menu button:focus-visible,
+.back-link:focus-visible,
+.post-card a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .theme-menu {
   background: var(--surface);
   border: 1px solid var(--border);

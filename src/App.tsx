@@ -5,6 +5,11 @@ import './App.css'
 
 type Theme = 'light' | 'dark' | 'system'
 
+function navigate(path: string) {
+  window.history.pushState({}, '', path)
+  window.dispatchEvent(new PopStateEvent('popstate'))
+}
+
 function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>('system')
   const [open, setOpen] = useState(false)
@@ -94,7 +99,14 @@ function App() {
     <div className="app-shell">
       <header className="site-header">
         {postId ? (
-          <a className="brand back-link" href="/">
+          <a
+            className="brand back-link"
+            href="/"
+            onClick={(event) => {
+              event.preventDefault()
+              navigate('/')
+            }}
+          >
             <span aria-hidden="true">←</span> All posts
           </a>
         ) : (
@@ -136,7 +148,13 @@ function PostIndex({ error, posts, onError, onPosts }: PostIndexProps) {
       <section className="post-list" aria-label="Posts">
         {posts.map((post) => (
           <article className="post-card" key={post.id}>
-            <a href={`/posts/${post.id}`}>
+            <a
+              href={`/posts/${post.id}`}
+              onClick={(event) => {
+                event.preventDefault()
+                navigate(`/posts/${post.id}`)
+              }}
+            >
               <span className="post-number">#{post.id}</span>
               <h2>{post.title}</h2>
               <p>{post.body}</p>
